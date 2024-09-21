@@ -33,21 +33,29 @@ export default function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
   const { id } = router.query;
+
   const {
-    data: { place, comments } = {},
+    data: place,
+
     isLoading,
     error,
   } = useSWR(`/api/places/${id}`);
 
+  console.log("Place ID from query:", id);
+  console.log("Place data from API:", place);
+
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
+  if (error || !place) return <h2>Place not found or an error occurred.</h2>;
 
   function deletePlace() {
     console.log("deleted?");
   }
 
+  console.log("place", place);
+
   return (
     <>
-      <Link href={'/'} passHref legacyBehavior>
+      <Link href={"/"} passHref legacyBehavior>
         <StyledLink justifySelf="start">back</StyledLink>
       </Link>
       <ImageContainer>
@@ -76,7 +84,7 @@ export default function DetailsPage() {
           Delete
         </StyledButton>
       </ButtonContainer>
-      <Comments locationName={place.name} comments={comments} />
+      <Comments locationName={place.name} comments={place.comments} />
     </>
   );
 }
