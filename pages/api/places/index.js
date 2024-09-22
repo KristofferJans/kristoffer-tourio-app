@@ -20,4 +20,16 @@ export default async function handler(request, response) {
       response.status(400).json({ error: error.message });
     }
   }
+
+  if (request.method === "POST") {
+    try {
+      const commentData = request.body;
+      await Comment.create(commentData);
+
+      response.status(201).json({ status: "Comment created" });
+    } catch (error) {
+      console.log(error);
+      response.status(400).json({ error: error.message });
+    }
+  }
 }
