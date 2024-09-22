@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FormContainer, Input, Label } from "./Form";
 import { StyledButton } from "./StyledButton.js";
 
-export default function Comments({ locationName, comments }) {
+export default function Comments({ locationName, comments, onSubmit }) {
   const Article = styled.article`
     display: flex;
     flex-direction: column;
@@ -17,13 +17,13 @@ export default function Comments({ locationName, comments }) {
     }
   `;
 
-  function handleSubmitComment(e) {
-    e.preventDefault();
-  }
+  // function handleSubmitComment(e) {
+  //   e.preventDefault();
+  // }
 
   return (
     <Article>
-      <FormContainer onSubmit={handleSubmitComment}>
+      <FormContainer onSubmit={onSubmit}>
         <Label htmlFor="name">Your Name</Label>
         <Input type="text" name="name" placeholder="name" />
         <Label htmlFor="comment">Your Comment</Label>

@@ -39,6 +39,7 @@ export default function DetailsPage() {
 
     isLoading,
     error,
+    mutate,
   } = useSWR(`/api/places/${id}`);
 
   console.log("Place ID from query:", id);
@@ -58,6 +59,28 @@ export default function DetailsPage() {
   }
 
   console.log("place", place);
+
+  async function handleSubmitComment(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const commentData = Object.fromEntries(formData);
+
+    const response = await fetch(`/api/places/${id}/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    });
+
+    if (response.ok) {
+      mutate();
+      event.target.reset();
+    } else {
+      console.error("Failed to submit comment");
+    }
+  }
 
   return (
     <>
@@ -90,7 +113,11 @@ export default function DetailsPage() {
           Delete
         </StyledButton>
       </ButtonContainer>
-      <Comments locationName={place.name} comments={place.comments} />
+      <Comments
+        locationName={place.name}
+        comments={place.comments}
+        onSubmit={handleSubmitComment}
+      />
     </>
   );
 }
