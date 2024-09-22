@@ -24,11 +24,6 @@ export default async function handler(request, response) {
       console.error(error);
       response.status(400).json({ error: error.message });
     }
-  } else {
-    response.setHeader("Allow", ["POST"]);
-    response
-      .status(405)
-      .json({ status: `Method ${request.method} not allowed` });
   }
 }
 
