@@ -28,7 +28,7 @@ export default async function handler(request, response) {
     response.setHeader("Allow", ["POST"]);
     response
       .status(405)
-      .json({ status: `Method ${request.method} not allowed.` });
+      .json({ status: `Method ${request.method} not allowed` });
   }
 }
 
