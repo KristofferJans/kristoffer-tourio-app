@@ -82,6 +82,18 @@ export default function DetailsPage() {
     }
   }
 
+  async function deleteComment(commentID) {
+    const response = await fetch(`/api/places/${id}/comments`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      await response.json();
+      mutate();
+    } else {
+      console.error(`Error: ${response.status}`);
+    }
+  }
+
   return (
     <>
       <Link href={"/"} passHref legacyBehavior>
