@@ -129,6 +129,7 @@ export default function DetailsPage() {
         locationName={place.name}
         comments={place.comments}
         onSubmit={handleSubmitComment}
+        onDelete={deleteComment}
       />
     </>
   );
