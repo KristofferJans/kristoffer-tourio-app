@@ -18,18 +18,25 @@ export default function CreatePlacePage() {
 
     const formData = new FormData(event.target);
     const placeData = Object.fromEntries(formData);
+    const imageURL = placeData.image;
 
-    const response = await fetch("/api/places", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(placeData),
-    });
+    console.log("imageURL", imageURL);
 
-    if (response.ok) {
-      mutate();
-      router.push("/");
+    if (imageURL.includes("http")) {
+      const response = await fetch("/api/places", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(placeData),
+      });
+
+      if (response.ok) {
+        mutate();
+        router.push("/");
+      }
+    } else {
+      alert("Please enter a valid Image URL!");
     }
   }
 

@@ -85,6 +85,10 @@ export default function DetailsPage() {
   async function deleteComment(commentID) {
     const response = await fetch(`/api/places/${id}/comments`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentID),
     });
     if (response.ok) {
       await response.json();

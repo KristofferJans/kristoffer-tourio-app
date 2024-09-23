@@ -24,15 +24,16 @@ export default async function handler(request, response) {
 
   if (request.method === "DELETE") {
     try {
-      await Comment.findByIdAndDelete(commentId);
+      const commentID = request.body;
+      await Comment.findByIdAndDelete(commentID);
 
       await Place.findByIdAndUpdate(id, {
-        $pull: { comments: commentId },
+        $pull: { comments: commentID },
       });
 
       response
         .status(200)
-        .json({ status: `Comment ${commentId} successfully deleted.` });
+        .json({ status: `Comment ${commentID} successfully deleted.` });
     } catch (error) {
       console.error(error);
       response.status(400).json({ error: error.message });
