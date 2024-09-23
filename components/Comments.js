@@ -1,8 +1,14 @@
 import styled from "styled-components";
 import { FormContainer, Input, Label } from "./Form";
 import { StyledButton } from "./StyledButton.js";
+import { Fragment } from "react";
 
-export default function Comments({ locationName, comments, onSubmit }) {
+export default function Comments({
+  locationName,
+  comments,
+  onSubmit,
+  onDelete,
+}) {
   const Article = styled.article`
     display: flex;
     flex-direction: column;
@@ -33,16 +39,23 @@ export default function Comments({ locationName, comments, onSubmit }) {
       {comments && (
         <>
           <h1> {comments.length} fans commented on this place:</h1>
-          {comments.map(({ name, comment }, idx) => {
+          {comments.map(({ name, comment, _id }, idx) => {
             return (
-              <>
-                <p key={idx}>
+              <Fragment key={_id}>
+                <p>
                   <small>
                     <strong>{name}</strong> commented on {locationName}
                   </small>
                 </p>
                 <span>{comment}</span>
-              </>
+                <StyledButton
+                  type="button"
+                  variant="delete"
+                  onClick={() => onDelete(_id)}
+                >
+                  Delete Comment
+                </StyledButton>
+              </Fragment>
             );
           })}
         </>
